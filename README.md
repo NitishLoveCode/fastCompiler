@@ -1,49 +1,54 @@
-# 🌐 fastCompiler.com – Frontend
+# React + TypeScript + Vite
 
-**fastCompiler.com** is an open-source online coding platform focused on DSA (Data Structures & Algorithms) preparation. Designed to be your go-to resource for mastering DSA through hands-on coding questions, this platform is built with a job-ready mindset.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🚀 Features
+Currently, two official plugins are available:
 
-- ✅ Practice coding questions in real-time  
-- 📚 Structured DSA roadmap for interviews  
-- 💻 Fast and interactive code compiler  
-- 🧠 Prepare for tech interviews efficiently  
-- 🌍 100% open-source – community-driven platform
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 🛠 Tech Stack
+## Expanding the ESLint configuration
 
-- **Frontend**: React.js  
-- **Styling**: Tailwind CSS  
-- **Language**: JavaScript / TypeScript
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 🤝 Contributing
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-We welcome contributions of all kinds!
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-1. Fork the repository
-2. Create your branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m "Add some feature"`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-> 💡 You can contribute by improving UI/UX, fixing bugs, adding components, or suggesting features.
-
-## 🙋 About Me
-
-**Author**: Nitish Kumar  
-**Email**: [NitishLoveCode@gmail.com](mailto:nitishlovecode@gmail.com)  
-**LinkedIn**: [linkedin.com/in/NitishLoveCode](https://linkedin.com/in/nitishlovecode)  
-**GitHub**: [github.com/NitishLoveCode](https://github.com/nitishlovecode)
-
----
-
-## 📜 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-### 🌟 Star this repo if you find it useful and share it with others. Let’s build something amazing together!
-
-
-
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
+```
